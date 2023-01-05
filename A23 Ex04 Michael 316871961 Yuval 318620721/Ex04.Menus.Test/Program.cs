@@ -1,7 +1,4 @@
-﻿using Ex04.Menus.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,14 +8,27 @@ namespace Ex04.Menus.Test
     {
         static void Main(string[] args)
         {
+            ApplicationManager applicationManager = new ApplicationManager();
+
+            applicationManager.StartApplicationUsingInterfaces();
+            applicationManager.StartApplicationUsingDelegates();
         }
+
+        
     }
 
-    public class ShowVersionCommand : ICommand
+    public class ApplicationManager
     {
-        public void ShowVersion()
+        public ApplicationManager() { }
+
+        public void StartApplicationUsingDelegates()
         {
-            Console.WriteLine("");
+
+        }
+
+        public void StartApplicationUsingInterfaces()
+        {
+
         }
     }
 }
