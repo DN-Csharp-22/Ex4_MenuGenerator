@@ -10,38 +10,44 @@ namespace Ex04.Menus.Interfaces
     {
         MenuItem menu { get; set; }
 
-        List<int> choices { get; set; }
+        List<int> choiceHistory { get; set; }
 
         public m_MainMenu(MenuItem menuItem)
         {
             this.menu = menuItem;
-            this.choices = new List<int>();
+            this.choiceHistory = new List<int>();
         }
 
         public void Show()
         {
             while (true)
             {
-                menu.Print(choices);
+                menu.Print(choiceHistory, true);
 
-                bool isMainMenu = choices.Count == 0;
+                int choice = menu.GetChoice(choiceHistory, out ICommand command);
 
-                int choice = menu.GetChoice(isMainMenu);
-
-                if (choice == 0)
+                if (choice > 0)
                 {
-                    if (choices.Count > 0)
+                    if (command != null)
                     {
-                        choices.RemoveAt(choices.Count - 1);
+                        command.Run();
+                        Console.ReadKey();
                     }
                     else
                     {
-                        Console.WriteLine("You are in the main menu already");
+                        choiceHistory.Add(choice);
                     }
                 }
-                else
+                else if (choice == 0)
                 {
-                    choices.Add(choice);
+                    if (choiceHistory.Count == 0) //Exit
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        choiceHistory.RemoveAt(choiceHistory.Count - 1);
+                    }
                 }
 
                 Console.Clear();

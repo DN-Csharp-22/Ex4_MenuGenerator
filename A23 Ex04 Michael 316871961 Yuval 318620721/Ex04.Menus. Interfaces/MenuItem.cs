@@ -21,12 +21,19 @@ namespace Ex04.Menus.Interfaces
             this.Commands = commands;
         }
 
-        public void RunCommand(int choice)
+        public void RunCommand(List<int> choices, int choice)
         {
-            Commands[choice].Run();
+            if (menuOptions.Count > 0)
+            {
+                menuOptions[choices.First() - 1].RunCommand(choices.Skip(1).ToList(), choice);
+            }
+            else
+            {
+                Commands[choice].Run();
+            }
         }
 
-        public void Print(List<int> choices)
+        public void Print(List<int> choices, bool isMainMenu = false)
         {
             if (choices.Count > 0)
             {
@@ -35,8 +42,6 @@ namespace Ex04.Menus.Interfaces
             else
             {
                 PrintHeader();
-
-                bool isMainMenu = choices.Count == 0;
 
                 PrintOptions(isMainMenu);
             }
@@ -70,29 +75,47 @@ namespace Ex04.Menus.Interfaces
             Console.WriteLine(string.Format(" 0. {0}", (isMainMenu ? "Exit" : "Back")));
         }
 
-        public int GetChoice(bool isMainMenu)
+        public MenuItem GetCurrnetMenuItem(List<int> choices)
         {
-            Console.WriteLine(string.Format("Please enter your choice (1-{0} or 0 to {1})", menuOptions.Count, (isMainMenu ? "Exit" : "Back")));
-
-            int result = -1;
-
-            bool inputIsValid = false;
-
-            int range = menuOptions.Count > 0 ? menuOptions.Count : Commands.Length;
-
-            while (!inputIsValid)
+            if (choices.Count >= 1)
             {
-                string choice = Console.ReadLine();
+                return menuOptions[choices.First() - 1].GetCurrnetMenuItem(choices.Skip(1).ToList());
+            }
+            else
+            {
+                return this;
+            }
+        }
 
-                if (int.TryParse(choice, out result))
+        public int GetChoice(List<int> choices, out ICommand command)
+        {
+            command = null;
+
+            MenuItem currentMenuItem = GetCurrnetMenuItem(choices);
+
+            bool isCommand = currentMenuItem.Commands.Length > 0;
+
+            bool isMainMenu = choices.Count == 0;
+
+            int inputMaxRange = isCommand ? currentMenuItem.Commands.Length : currentMenuItem.menuOptions.Count;
+
+            Console.WriteLine(string.Format("Please enter your choice (1-{0} or 0 to {1})", inputMaxRange, (isMainMenu ? "Exit" : "Back")));
+
+            int choice = -1;
+
+            while (true)
+            {
+                string input = Console.ReadLine();
+
+                if (int.TryParse(input, out choice))
                 {
-                    if (result > range || result < 0)
+                    if (choice >= 0 && choice <= inputMaxRange)
                     {
-                        Console.WriteLine("Invalid input, pleas choose one of the given options above");
+                        break;
                     }
                     else
                     {
-                        inputIsValid = true;
+                        Console.WriteLine("Invalid input, pleas choose one of the given options above");
                     }
                 }
                 else
@@ -101,7 +124,12 @@ namespace Ex04.Menus.Interfaces
                 }
             }
 
-            return result;
+            if (choice > 0 && isCommand)
+            {
+                command = currentMenuItem.Commands[choice - 1];
+            }
+
+            return choice;
         }
 
     }
