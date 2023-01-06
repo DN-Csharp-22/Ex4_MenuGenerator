@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationManager.cs" />
     <Compile Include="MenuCommands.cs" />
     <Compile Include="MenuCommands\CountUppercaseCommand.cs" />
     <Compile Include="Program.cs" />
