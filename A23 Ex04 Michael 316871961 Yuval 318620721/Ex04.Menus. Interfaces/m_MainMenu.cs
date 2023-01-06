@@ -8,74 +8,44 @@ namespace Ex04.Menus.Interfaces
 {
     public class m_MainMenu
     {
-        MenuItem menuItem { get; set; }
+        MenuItem menu { get; set; }
 
-        List<string> choices { get; set; }
+        List<int> choices { get; set; }
 
         public m_MainMenu(MenuItem menuItem)
         {
-            this.menuItem = menuItem;
+            this.menu = menuItem;
+            this.choices = new List<int>();
         }
 
         public void Show()
         {
             while (true)
             {
-                PrintMenu(menuItem);
+                menu.Print(choices);
 
-                int choice = GetChoice(menuItem.menuOptions.Count);
-            }
-        }
+                bool isMainMenu = choices.Count == 0;
 
-        public void PrintMenu(MenuItem menuItem)
-        {
-            Console.WriteLine(string.Format("**{0}**", menuItem.Header));
+                int choice = menu.GetChoice(isMainMenu);
 
-            for (int i = 0; i < menuItem.Header.Length; i++)
-            {
-                Console.Write("=");
-            }
-
-            Console.WriteLine();
-
-            for (int i = 0; i < menuItem.menuOptions.Count; i++)
-            {
-                Console.WriteLine(string.Format("{0}. {1}", i, menuItem.menuOptions[i]));
-            }
-
-            string backOrExitText = choices.Count == 0 ? "Exit" : "Back";
-
-            Console.WriteLine(string.Format("Please enter your choice (1 to {0} or 0 to {1})", menuItem.menuOptions.Count, backOrExitText));
-        }
-
-        public int GetChoice(int i_range)
-        {
-            int result = -1;
-
-            bool inputIsValid = false;
-
-            while (!inputIsValid)
-            {
-                string choice = Console.ReadLine();
-
-                if (int.TryParse(choice, out result))
+                if (choice == 0)
                 {
-                    if (result > i_range || result < 0)
+                    if (choices.Count > 0)
                     {
-                        Console.WriteLine("Invalid input, pleas choose one of the given options above");
+                        choices.RemoveAt(choices.Count - 1);
                     }
                     else
                     {
-                        inputIsValid = true;
+                        Console.WriteLine("You are in the main menu already");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Invalid input, please enter a valid integer");
+                    choices.Add(choice);
                 }
-            }
 
-            return result;
+                Console.Clear();
+            }
         }
     }
 }
