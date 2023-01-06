@@ -19,14 +19,17 @@ namespace Ex04.Menus.Interfaces
 
         public void Show()
         {
-            PrintMenu(menuItem);
+            while (true)
+            {
+                PrintMenu(menuItem);
 
-
+                int choice = GetChoice(menuItem.menuOptions.Count);
+            }
         }
 
         public void PrintMenu(MenuItem menuItem)
         {
-            Console.WriteLine(menuItem.Header);
+            Console.WriteLine(string.Format("**{0}**", menuItem.Header));
 
             for (int i = 0; i < menuItem.Header.Length; i++)
             {
@@ -43,12 +46,36 @@ namespace Ex04.Menus.Interfaces
             string backOrExitText = choices.Count == 0 ? "Exit" : "Back";
 
             Console.WriteLine(string.Format("Please enter your choice (1 to {0} or 0 to {1})", menuItem.menuOptions.Count, backOrExitText));
+        }
 
-            //bool inputIsValid
+        public int GetChoice(int i_range)
+        {
+            int result = -1;
 
-            string choice = Console.ReadLine();
+            bool inputIsValid = false;
 
-            
+            while (!inputIsValid)
+            {
+                string choice = Console.ReadLine();
+
+                if (int.TryParse(choice, out result))
+                {
+                    if (result > i_range || result < 0)
+                    {
+                        Console.WriteLine("Invalid input, pleas choose one of the given options above");
+                    }
+                    else
+                    {
+                        inputIsValid = true;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input, please enter a valid integer");
+                }
+            }
+
+            return result;
         }
     }
 }
