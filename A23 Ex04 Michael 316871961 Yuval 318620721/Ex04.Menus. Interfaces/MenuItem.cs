@@ -12,7 +12,9 @@ namespace Ex04.Menus.Interfaces
 
         public ICommand[] commands { get; set; }
 
-        public MenuItem() { }
+        public MenuItem()
+        {
+        }
 
         public MenuItem(string header, List<MenuItem> menuItems, ICommand[] commands)
         {
@@ -72,7 +74,7 @@ namespace Ex04.Menus.Interfaces
                 Console.WriteLine(string.Format(" {0}. {1}", i + 1, optionText));
             }
 
-            Console.WriteLine(string.Format(" 0. {0}", (isMainMenu ? "Exit" : "Back")));
+            Console.WriteLine(string.Format(" 0. {0}", isMainMenu ? "Exit" : "Back"));
         }
 
         private MenuItem getCurrentMenuItem(List<int> choices)
@@ -99,7 +101,7 @@ namespace Ex04.Menus.Interfaces
 
             int inputMaxRange = isCommand ? currentMenuItem.commands.Length : currentMenuItem.menuOptions.Count;
 
-            Console.WriteLine(string.Format("Please enter your choice (1-{0} or 0 to {1})", inputMaxRange, (isMainMenu ? "Exit" : "Back")));
+            Console.WriteLine(string.Format("Please enter your choice (1-{0} or 0 to {1})", inputMaxRange, isMainMenu ? "Exit" : "Back"));
 
             int choice = -1;
 

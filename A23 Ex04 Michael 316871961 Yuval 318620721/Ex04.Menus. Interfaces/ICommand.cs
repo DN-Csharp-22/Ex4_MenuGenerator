@@ -9,6 +9,7 @@ namespace Ex04.Menus.Interfaces
     public interface ICommand
     {
         string GetCommandHeader();
+
         void Run();
     }
 }

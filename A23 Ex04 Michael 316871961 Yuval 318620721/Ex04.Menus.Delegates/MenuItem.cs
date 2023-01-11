@@ -14,7 +14,9 @@ namespace Ex04.Menus.Delegates
 
         public Tuple<string, menuCommandDelegate>[] commands { get; set; }
 
-        public MenuItem() { }
+        public MenuItem() 
+        {
+        }
 
         public MenuItem(string header, List<MenuItem> menuItems, Tuple<string, menuCommandDelegate>[] commands)
         {
@@ -72,9 +74,9 @@ namespace Ex04.Menus.Delegates
                 string optionText = menuHasOptions ? menuOptions[i].Header : commands[i].Item1;
 
                 Console.WriteLine(string.Format(" {0}. {1}", i + 1, optionText));
-
             }
-            Console.WriteLine(string.Format(" 0. {0}", (isMainMenu ? "Exit" : "Back")));
+
+            Console.WriteLine(string.Format(" 0. {0}", isMainMenu ? "Exit" : "Back"));
         }
 
         private MenuItem getCurrentMenuItem(List<int> choices)
@@ -87,7 +89,6 @@ namespace Ex04.Menus.Delegates
             {
                 return this;
             }
-
         }
 
         public int GetChoice(List<int> choices, out menuCommandDelegate command)
@@ -102,7 +103,7 @@ namespace Ex04.Menus.Delegates
 
             int inputMaxRange = isCommand ? currentMenuItem.commands.Length : currentMenuItem.menuOptions.Count;
 
-            Console.WriteLine(string.Format("Please enter your choice (1-{0} or 0 to {1})", inputMaxRange, (isMainMenu ? "Exit" : "Back")));
+            Console.WriteLine(string.Format("Please enter your choice (1-{0} or 0 to {1})", inputMaxRange, isMainMenu ? "Exit" : "Back"));
 
             int choice = -1;
 

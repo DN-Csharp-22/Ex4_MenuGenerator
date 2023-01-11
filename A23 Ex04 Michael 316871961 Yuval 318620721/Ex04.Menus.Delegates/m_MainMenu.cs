@@ -8,9 +8,9 @@ namespace Ex04.Menus.Delegates
 {
     public class m_MainMenu
     {
-        MenuItem menu { get; set; }
+        private MenuItem menu { get; set; }
 
-        List<int> choiceHistory { get; set; }
+        private List<int> choiceHistory { get; set; }
 
         public m_MainMenu(MenuItem menuItem)
         {
@@ -40,7 +40,8 @@ namespace Ex04.Menus.Delegates
                 }
                 else if (choice == 0)
                 {
-                    if (choiceHistory.Count == 0) //Exit
+                    ////Exit
+                    if (choiceHistory.Count == 0)
                     {
                         break;
                     }

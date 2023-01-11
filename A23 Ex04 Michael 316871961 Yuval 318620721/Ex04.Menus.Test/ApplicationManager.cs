@@ -5,7 +5,9 @@ namespace Ex04.Menus.Test
 {
     public class ApplicationManager
     {
-        public ApplicationManager() { }
+        public ApplicationManager() 
+        {
+        }
 
         public void Start()
         {
@@ -65,8 +67,8 @@ namespace Ex04.Menus.Test
                         menuOptions = new List<Delegates.MenuItem>(),
                         commands = new Tuple<string, Delegates.menuCommandDelegate>[2]
                         {
-                            new Tuple<string, Delegates.menuCommandDelegate> ( "Show Version", MenuCommands.PrintVersionToConsole ),
-                            new Tuple<string, Delegates.menuCommandDelegate> ( "Count Uppercase", MenuCommands.CountUppercaseLettersFromInput)
+                            new Tuple<string, Delegates.menuCommandDelegate>("Show Version", MenuCommands.PrintVersionToConsole),
+                            new Tuple<string, Delegates.menuCommandDelegate>("Count Uppercase", MenuCommands.CountUppercaseLettersFromInput)
                         }
                     },
                     new Delegates.MenuItem()
@@ -75,8 +77,8 @@ namespace Ex04.Menus.Test
                         menuOptions = new List<Delegates.MenuItem>(),
                         commands = new Tuple<string, Delegates.menuCommandDelegate>[2]
                         {
-                            new Tuple<string, Delegates.menuCommandDelegate> ( "Show Date", MenuCommands.PrintCurrentDateToConsole ),
-                            new Tuple<string, Delegates.menuCommandDelegate> ( "Show Time", MenuCommands.PrintCurrentTimeToConsole )
+                            new Tuple<string, Delegates.menuCommandDelegate>("Show Date", MenuCommands.PrintCurrentDateToConsole),
+                            new Tuple<string, Delegates.menuCommandDelegate>("Show Time", MenuCommands.PrintCurrentTimeToConsole)
                         }
                     }
                 },
@@ -86,7 +88,6 @@ namespace Ex04.Menus.Test
             Delegates.m_MainMenu applicationMenu = new Delegates.m_MainMenu(menu);
 
             applicationMenu.Show();
-
         }
     }
 }

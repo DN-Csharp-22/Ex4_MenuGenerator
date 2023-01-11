@@ -1,5 +1,4 @@
 ﻿using Ex04.Menus.Interfaces;
-using System;
 
 namespace Ex04.Menus.Test
 {

@@ -1,6 +1,4 @@
 ﻿using Ex04.Menus.Interfaces;
-using System;
-using System.Linq;
 
 namespace Ex04.Menus.Test
 {
@@ -10,11 +8,10 @@ namespace Ex04.Menus.Test
         {
             return "Count Uppercase";
         }
+
         public void Run()
         {
             MenuCommands.CountUppercaseLettersFromInput();
         }
     }
-
-
 }
