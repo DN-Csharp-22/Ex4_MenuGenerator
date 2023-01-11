@@ -22,7 +22,7 @@ namespace Ex04.Menus.Interfaces
         {
             while (true)
             {
-                menu.Print(choiceHistory, true);
+                menu.print(choiceHistory, true);
 
                 int choice = menu.GetChoice(choiceHistory, out ICommand command);
 

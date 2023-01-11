@@ -10,7 +10,7 @@ namespace Ex04.Menus.Interfaces
 
         public List<MenuItem> menuOptions { get; set; }
 
-        public ICommand[] Commands { get; set; }
+        public ICommand[] commands { get; set; }
 
         public MenuItem() { }
 
@@ -18,36 +18,36 @@ namespace Ex04.Menus.Interfaces
         {
             this.Header = header;
             this.menuOptions = menuItems;
-            this.Commands = commands;
+            this.commands = commands;
         }
 
-        public void RunCommand(List<int> choices, int choice)
+        public void runCommand(List<int> choices, int choice)
         {
             if (menuOptions.Count > 0)
             {
-                menuOptions[choices.First() - 1].RunCommand(choices.Skip(1).ToList(), choice);
+                menuOptions[choices.First() - 1].runCommand(choices.Skip(1).ToList(), choice);
             }
             else
             {
-                Commands[choice].Run();
+                commands[choice].Run();
             }
         }
 
-        public void Print(List<int> choices, bool isMainMenu = false)
+        public void print(List<int> choices, bool isMainMenu = false)
         {
             if (choices.Count > 0)
             {
-                menuOptions[choices.First() - 1].Print(choices.Skip(1).ToList());
+                menuOptions[choices.First() - 1].print(choices.Skip(1).ToList());
             }
             else
             {
-                PrintHeader();
+                printHeader();
 
-                PrintOptions(isMainMenu);
+                printOptions(isMainMenu);
             }
         }
 
-        private void PrintHeader()
+        private void printHeader()
         {
             Console.WriteLine(string.Format("**{0}**", Header));
 
@@ -59,15 +59,15 @@ namespace Ex04.Menus.Interfaces
             Console.WriteLine();
         }
 
-        private void PrintOptions(bool isMainMenu)
+        private void printOptions(bool isMainMenu)
         {
-            bool isOptions = menuOptions.Count > 0;
+            bool menuHasOptions = menuOptions.Count > 0;
 
-            int range = isOptions ? menuOptions.Count : Commands.Length;
+            int range = menuHasOptions ? menuOptions.Count : commands.Length;
 
             for (int i = 0; i < range; i++)
             {
-                string optionText = isOptions ? menuOptions[i].Header : Commands[i].GetCommandHeader();
+                string optionText = menuHasOptions ? menuOptions[i].Header : commands[i].GetCommandHeader();
 
                 Console.WriteLine(string.Format(" {0}. {1}", i + 1, optionText));
             }
@@ -75,11 +75,11 @@ namespace Ex04.Menus.Interfaces
             Console.WriteLine(string.Format(" 0. {0}", (isMainMenu ? "Exit" : "Back")));
         }
 
-        public MenuItem GetCurrnetMenuItem(List<int> choices)
+        private MenuItem getCurrentMenuItem(List<int> choices)
         {
             if (choices.Count >= 1)
             {
-                return menuOptions[choices.First() - 1].GetCurrnetMenuItem(choices.Skip(1).ToList());
+                return menuOptions[choices.First() - 1].getCurrentMenuItem(choices.Skip(1).ToList());
             }
             else
             {
@@ -91,13 +91,13 @@ namespace Ex04.Menus.Interfaces
         {
             command = null;
 
-            MenuItem currentMenuItem = GetCurrnetMenuItem(choices);
+            MenuItem currentMenuItem = getCurrentMenuItem(choices);
 
-            bool isCommand = currentMenuItem.Commands.Length > 0;
+            bool isCommand = currentMenuItem.commands.Length > 0;
 
             bool isMainMenu = choices.Count == 0;
 
-            int inputMaxRange = isCommand ? currentMenuItem.Commands.Length : currentMenuItem.menuOptions.Count;
+            int inputMaxRange = isCommand ? currentMenuItem.commands.Length : currentMenuItem.menuOptions.Count;
 
             Console.WriteLine(string.Format("Please enter your choice (1-{0} or 0 to {1})", inputMaxRange, (isMainMenu ? "Exit" : "Back")));
 
@@ -126,11 +126,10 @@ namespace Ex04.Menus.Interfaces
 
             if (choice > 0 && isCommand)
             {
-                command = currentMenuItem.Commands[choice - 1];
+                command = currentMenuItem.commands[choice - 1];
             }
 
             return choice;
         }
-
     }
 }

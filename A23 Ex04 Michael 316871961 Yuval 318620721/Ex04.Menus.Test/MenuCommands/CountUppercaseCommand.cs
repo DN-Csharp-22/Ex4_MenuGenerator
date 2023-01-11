@@ -15,4 +15,6 @@ namespace Ex04.Menus.Test
             MenuCommands.CountUppercaseLettersFromInput();
         }
     }
+
+
 }

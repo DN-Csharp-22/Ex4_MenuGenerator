@@ -8,14 +8,50 @@ namespace Ex04.Menus.Delegates
 {
     public class m_MainMenu
     {
-        List<MenuItem> MenuItems { get; set; }
-        public m_MainMenu(List<MenuItem> menuItems)
+        MenuItem menu { get; set; }
+
+        List<int> choiceHistory { get; set; }
+
+        public m_MainMenu(MenuItem menuItem)
         {
-            this.MenuItems = menuItems;
+            this.menu = menuItem;
+            this.choiceHistory = new List<int>();
         }
+
         public void Show()
         {
+            while (true)
+            {
+                menu.print(choiceHistory, true);
 
+                int choice = menu.GetChoice(choiceHistory, out menuCommandDelegate command);
+
+                if (choice > 0)
+                {
+                    if (command != null)
+                    {
+                        command();
+                        Console.ReadKey();
+                    }
+                    else
+                    {
+                        choiceHistory.Add(choice);
+                    }
+                }
+                else if (choice == 0)
+                {
+                    if (choiceHistory.Count == 0) //Exit
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        choiceHistory.RemoveAt(choiceHistory.Count - 1);
+                    }
+                }
+
+                Console.Clear();
+            }
         }
     }
 }

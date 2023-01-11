@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Ex04.Menus.Test
 {
@@ -9,6 +10,8 @@ namespace Ex04.Menus.Test
         public void Start()
         {
             StartApplicationUsingInterfaces();
+
+            Console.Clear();
 
             StartApplicationUsingDelegates();
         }
@@ -24,7 +27,7 @@ namespace Ex04.Menus.Test
                     {
                         Header = "Version and Uppercase",
                         menuOptions = new List<Interfaces.MenuItem>(),
-                        Commands = new Interfaces.ICommand[]
+                        commands = new Interfaces.ICommand[]
                         {
                             new ShowVersionCommand(),
                             new CountUppercaseCommand()
@@ -34,14 +37,14 @@ namespace Ex04.Menus.Test
                     {
                         Header = "Show Date/Time",
                         menuOptions = new List<Interfaces.MenuItem>(),
-                        Commands = new Interfaces.ICommand[]
+                        commands = new Interfaces.ICommand[]
                         {
                             new ShowDateCommand(),
                             new ShowTimeCommand()
                         }
                     }
                 },
-                Commands = new Interfaces.ICommand[0]
+                commands = new Interfaces.ICommand[0]
             };
 
             Interfaces.m_MainMenu applicationMenu = new Interfaces.m_MainMenu(menu);
@@ -51,6 +54,38 @@ namespace Ex04.Menus.Test
 
         public void StartApplicationUsingDelegates()
         {
+            Delegates.MenuItem menu = new Delegates.MenuItem()
+            {
+                Header = "Delegates Main Menu",
+                menuOptions = new List<Delegates.MenuItem>()
+                {
+                    new Delegates.MenuItem()
+                    {
+                        Header = "Version and Uppercase",
+                        menuOptions = new List<Delegates.MenuItem>(),
+                        commands = new Tuple<string, Delegates.menuCommandDelegate>[2]
+                        {
+                            new Tuple<string, Delegates.menuCommandDelegate> ( "Show Version", MenuCommands.PrintVersionToConsole ),
+                            new Tuple<string, Delegates.menuCommandDelegate> ( "Count Uppercase", MenuCommands.CountUppercaseLettersFromInput)
+                        }
+                    },
+                    new Delegates.MenuItem()
+                    {
+                        Header = "Show Date/Time",
+                        menuOptions = new List<Delegates.MenuItem>(),
+                        commands = new Tuple<string, Delegates.menuCommandDelegate>[2]
+                        {
+                            new Tuple<string, Delegates.menuCommandDelegate> ( "Show Date", MenuCommands.PrintCurrentDateToConsole ),
+                            new Tuple<string, Delegates.menuCommandDelegate> ( "Show Time", MenuCommands.PrintCurrentTimeToConsole )
+                        }
+                    }
+                },
+                commands = new Tuple<string, Delegates.menuCommandDelegate>[0]
+            };
+
+            Delegates.m_MainMenu applicationMenu = new Delegates.m_MainMenu(menu);
+
+            applicationMenu.Show();
 
         }
     }
